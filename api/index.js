@@ -34,6 +34,22 @@ app.get("/api/employees", async (req, res) => {
   }
 });
 
+//Route to login
+app.post("/api/login", async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    const user = await User.findOne({ email });
+    if (user && user.password === password) {
+      res.json({ message: "Login successful" });
+    } else {
+      res.status(401).json({ message: "Invalid email or password" });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Failed to login" });
+  }
+});
+
 //Route to create a new employee
 app.post("/api/employees", async (req, res) => {
   try {
