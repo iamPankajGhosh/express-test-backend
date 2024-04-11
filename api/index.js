@@ -9,7 +9,7 @@ app.use(cors());
 
 dotenv.config();
 
-app.get("/api", (req, res) => {
+app.get("/", (req, res) => {
   res.send(`<h1>Welcome Test Backend</h1>`);
 });
 
