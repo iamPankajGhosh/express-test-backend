@@ -18,8 +18,8 @@ app.get("/api/employee", (req, res) => {
 });
 
 app.post("/api/auth", (req, res) => {
-  const { email, password } = req.body;
-  res.json({ email, password });
+  const { email, password, location } = req.body;
+  res.json({ email, password, location });
 });
 
 app.listen(process.env.PORT, () => {
