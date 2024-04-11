@@ -1,27 +1,89 @@
+import dotenv from "dotenv";
+dotenv.config();
+
 import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
-import dotenv from "dotenv";
+import { Attendance } from "../models/attendance.model.js";
+import { Leave } from "../models/leave.model.js";
+import { User } from "../models/user.model.js";
 
 const app = express();
+const PORT = process.env.PORT || 3000;
+
 app.use(express.json());
 app.use(cors());
 
-dotenv.config();
+// Connect to MongoDB
+mongoose
+  .connect(process.env.MONGO_URI)
+  .then(console.log("Connected to MongoDB"));
 
-app.get("/", (req, res) => {
-  res.send(`<h1>Welcome Test Backend</h1>`);
+const db = mongoose.connection;
+db.on("error", console.error.bind(console, "MongoDB connection error:"));
+
+// Routes
+// Route to get all employee
+app.get("/api/employees", async (req, res) => {
+  try {
+    const employees = await User.find();
+    res.json(employees);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Failed to fetch employees" });
+  }
 });
 
-app.get("/api/employee", (req, res) => {
-  res.json("all employee");
+//Route to create a new employee
+app.post("/api/employees", async (req, res) => {
+  try {
+    const { name, email, role } = req.body;
+    const user = new User({ name, email, role });
+    await user.save();
+    res.status(201).json({ message: "Employee created successfully" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Failed to create employee" });
+  }
 });
 
-app.post("/api/auth", (req, res) => {
-  const { email, password, location } = req.body;
-  res.json({ email, password, location });
+// Route to mark attendance for a user
+app.post("/api/attendance", async (req, res) => {
+  try {
+    const { userId, status } = req.body;
+    const attendance = new Attendance({
+      user: userId,
+      status,
+    });
+    await attendance.save();
+    res.status(201).json({ message: "Attendance marked successfully" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Failed to mark attendance" });
+  }
 });
 
-app.listen(process.env.PORT, () => {
-  console.log(`Server is running on port ${process.env.PORT}`);
+// Route to apply for leave
+app.post("/api/leave", async (req, res) => {
+  try {
+    const { userId, startDate, endDate, reason } = req.body;
+    const leave = new Leave({
+      user: userId,
+      startDate,
+      endDate,
+      reason,
+    });
+    await leave.save();
+    res
+      .status(201)
+      .json({ message: "Leave application submitted successfully" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Failed to submit leave application" });
+  }
+});
+
+// Start server
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
 });
