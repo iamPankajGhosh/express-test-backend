@@ -46,18 +46,18 @@ app.get("/api/employees", async (req, res) => {
 //   }
 // });
 
-// //Route to create a new employee
-// app.post("/api/employees", async (req, res) => {
-//   try {
-//     const { name, email, role } = req.body;
-//     const user = new User({ name, email, role });
-//     await user.save();
-//     res.status(201).json({ message: "Employee created successfully" });
-//   } catch (error) {
-//     console.error(error);
-//     res.status(500).json({ message: "Failed to create employee" });
-//   }
-// });
+//Route to create a new employee
+app.post("/api/employees", async (req, res) => {
+  try {
+    const { username, email, employeeId, role, password } = req.body;
+    const user = new User({ username, email, employeeId, role, password });
+    await user.save();
+    res.status(201).json({ message: "Employee created successfully" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Failed to create employee" });
+  }
+});
 
 // // Route to mark attendance for a user
 // app.post("/api/attendance", async (req, res) => {
