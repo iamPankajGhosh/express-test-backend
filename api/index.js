@@ -5,14 +5,9 @@ import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
 
-mongoose
-  .connect(process.env.MONGO_URI)
-  .then(console.log("Connected to MongoDB"))
-  .catch((err) => console.log(err));
-
 // import { Attendance } from "../models/attendance.model.js";
 // import { Leave } from "../models/leave.model.js";
-// import { User } from "../models/user.model.js";
+import { User } from "../models/user.model.js";
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -20,20 +15,17 @@ const PORT = process.env.PORT || 3000;
 app.use(express.json());
 app.use(cors());
 
-// // Connect to MongoDB
-// mongoose
-//   .connect(process.env.MONGO_URI)
-//   .then(console.log("Connected to MongoDB"));
-
-// const db = mongoose.connection;
-// db.on("error", console.error.bind(console, "MongoDB connection error:"));
+// Connect to MongoDB
+mongoose
+  .connect(process.env.MONGO_URI)
+  .then(console.log("Connected to MongoDB"));
 
 // // Routes
 // // Route to get all employee
 app.get("/api/employees", async (req, res) => {
   try {
-    // const employees = await User.find();
-    res.json(`employees : ${process.env.PORT} ${process.env.MONGO_URI}`);
+    const employees = await User.find();
+    res.json(employees);
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Failed to fetch employees" });
