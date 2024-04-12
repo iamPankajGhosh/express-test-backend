@@ -5,9 +5,7 @@ import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
 
-// import { Attendance } from "../models/attendance.model.js";
-// import { Leave } from "../models/leave.model.js";
-import { User } from "../models/user.model.js";
+import { User } from "./models/user.model.js";
 
 const app = express();
 const PORT = process.env.PORT || 3000;
