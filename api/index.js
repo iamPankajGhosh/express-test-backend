@@ -4,12 +4,14 @@ dotenv.config();
 import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
+import bodyParser from "body-parser";
 
 import { User } from "./models/user.model.js";
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(cors());
 
@@ -49,8 +51,8 @@ app.get("/api/employees", async (req, res) => {
 //Route to create a new employee
 app.post("/api/employees", async (req, res) => {
   try {
-    const { username, email, employeeId, role, password } = req.body;
-    const user = new User({ username, email, employeeId, role, password });
+    const { username, email, employeeId, password, role } = req.body;
+    const user = new User({ username, email, employeeId, password, role });
     await user.save();
     res.status(201).json({ message: "Employee created successfully" });
   } catch (error) {
