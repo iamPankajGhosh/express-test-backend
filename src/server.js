@@ -16,12 +16,17 @@ app.use(express.json());
 app.use(cors());
 
 // Connect to MongoDB
-mongoose
-  .connect(process.env.MONGO_URI)
-  .then(console.log("Connected to MongoDB"));
+// mongoose
+//   .connect(process.env.MONGO_URI)
+//   .then(console.log("Connected to MongoDB"));
 
 // // Routes
 // // Route to get all employee
+
+app.get("/", (req, res) => {
+  res.json("Hello World!");
+});
+
 app.get("/api/employees", async (req, res) => {
   try {
     const employees = await User.find();
