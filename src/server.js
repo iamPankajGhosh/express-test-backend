@@ -23,12 +23,12 @@ app.use(cors());
 // // Routes
 // // Route to get all employee
 
-app.get("/", (req, res) => {
+app.get("/api", (req, res) => {
   res.json("Hello World!");
 });
 
-app.get("/api/employees", async (req, res) => {
-  res.json("Hello World!");
+app.get("/api/user", async (req, res) => {
+  res.json("Hello Users!");
 });
 
 // //Route to login
