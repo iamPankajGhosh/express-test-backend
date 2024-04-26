@@ -28,13 +28,7 @@ app.get("/", (req, res) => {
 });
 
 app.get("/api/employees", async (req, res) => {
-  try {
-    const employees = await User.find();
-    res.json(employees);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: "Failed to fetch employees" });
-  }
+  res.json("Hello World!");
 });
 
 // //Route to login

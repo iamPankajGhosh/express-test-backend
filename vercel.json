@@ -1,7 +1,8 @@
 {
-  "builds": [
+  "routes": [
     {
-      "src": "src/server.js"
+      "src": "/api/(.*)",
+      "dest": "src/server.js"
     }
   ]
 }
