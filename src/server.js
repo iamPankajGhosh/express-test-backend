@@ -23,7 +23,7 @@ app.use(cors());
 // // Routes
 // // Route to get all employee
 
-app.get("/api", (req, res) => {
+app.get("/", (req, res) => {
   res.json("Hello World!");
 });
 
