@@ -14,8 +14,8 @@
   ],
   "rewrites": [
     {
-      "source": "/:path*",
-      "destination": "/api/v1/:path*"
+      "source": "/",
+      "destination": "/api/v1/"
     }
   ]
 }
